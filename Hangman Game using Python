@@ -1,0 +1,39 @@
+import random
+import winsound
+freq=300
+distri=2000
+words='''mango,strawberry,apple,litchi,orange,guava,pear,grapes,pomegrante,pineapple,blueberry,papaya,coconut,banana,watermelon'''
+#we entered some fruits in the words variable from where we will select random word using the random module
+a=words.split(',')
+choice=random.choice(a)
+chances=len(choice)+2
+guesses=''
+letterguessed=''
+name=str(input("Enter your name "))
+print(f"Hello {name}!,Let's play! Guess the letters of a word within {chances} chances Hint: It is a fruit")
+while chances>0: #while chances are greater than 0
+    failed=0
+    letter=str(input(" Enter a letter ")) #input to guess the letter
+    guesses+=letter
+    if not letter.isalpha() or len(letter)>1: #We will simply throw an error when anything entered other than a single letter
+        print("Error! please enter only a letter")
+    if letter in choice:
+        if letter in letterguessed:
+             print("You already guessed that letter!") # for letter already guessed
+        k=choice.count(letter)
+        for _ in range(k):
+            letterguessed+=letter
+    for char in choice:
+        if char in guesses and len(letter)<=1:
+            print(char,end="")
+        else:
+            print('_ ',end="")
+            failed+=1
+    if failed==0:
+        print(" \nYou won!")
+        winsound.Beep(freq,distri)
+        break
+    if letter not in choice and len(letter)<=1 and letter.isalpha():
+        chances-=1
+        if chances==0:
+            print(" \n You lost!")
